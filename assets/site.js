@@ -118,3 +118,29 @@
   var nb = document.getElementById('newcard');
   if (nb) nb.addEventListener('click', build);
 })();
+
+// Logo shows a different sport's ball on each visit
+(function () {
+  var G = '#c9a24f', N = '#14233f';
+  var S = '<g stroke="' + N + '" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">';
+  var C = '<circle cx="16" cy="16" r="15" fill="' + G + '"/>';
+  var BALLS = {
+    basketball: C + S + '<path d="M16 1v30M1 16h30"/><path d="M6.5 4.5c3.8 3 5.8 7 5.8 11.5s-2 8.5-5.8 11.5"/><path d="M25.5 4.5c-3.8 3-5.8 7-5.8 11.5s2 8.5 5.8 11.5"/></g>',
+    soccer: C + S + '<path d="M16 11l4.8 3.5-1.8 5.6h-6l-1.8-5.6z" fill="' + N + '"/><path d="M16 11V4.5M20.8 14.5l6-2M19 20.1l3.8 5.2M13 20.1l-3.8 5.2M11.2 14.5l-6-2"/></g>',
+    football: '<ellipse cx="16" cy="16" rx="15" ry="9.2" transform="rotate(-35 16 16)" fill="' + G + '"/>' + S.replace('<g ', '<g transform="rotate(-35 16 16)" ') + '<path d="M10.5 16h11M12.5 14v4M15 14v4M17.5 14v4M20 14v4M5.2 12.4v7.2M26.8 12.4v7.2"/></g>',
+    tennis: C + S + '<path d="M3.2 9.2C9 10.6 12.3 14.6 12.3 19.6c0 3.5-1.6 6.4-4 8.4"/><path d="M28.8 22.8C23 21.4 19.7 17.4 19.7 12.4c0-3.5 1.6-6.4 4-8.4"/></g>',
+    volleyball: C + S + '<path d="M16 16C14.6 10.4 13 5.6 10.9 1.9"/><path d="M16 16c4.9 1 9.3 3.6 13 7.5"/><path d="M16 16c-3.1 3.9-7.6 6.5-13 7.5"/><path d="M5.3 7.4c4.3-.9 8.5 0 11.9 2.7"/><path d="M24.8 3.9c1 3.8.4 7.7-1.8 11.3"/><path d="M22.6 28.3c-3.4-1.6-5.7-4.4-6.6-8"/></g>',
+    baseball: C + S + '<path d="M8.5 3.5c3 3.4 4.5 7.6 4.5 12.5s-1.5 9.1-4.5 12.5M23.5 3.5c-3 3.4-4.5 7.6-4.5 12.5s1.5 9.1 4.5 12.5"/></g>'
+  };
+  var keys = Object.keys(BALLS), last = null;
+  try { last = localStorage.getItem('rab-ball'); } catch (e) {}
+  var pool = keys.filter(function (k) { return k !== last; });
+  var pick = pool[Math.floor(Math.random() * pool.length)];
+  try { localStorage.setItem('rab-ball', pick); } catch (e) {}
+  document.querySelectorAll('.brand svg').forEach(function (svg) { svg.innerHTML = BALLS[pick]; });
+  var icon = document.querySelector('link[rel="icon"]');
+  if (icon) {
+    icon.type = 'image/svg+xml';
+    icon.href = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">' + BALLS[pick] + '</svg>');
+  }
+})();
