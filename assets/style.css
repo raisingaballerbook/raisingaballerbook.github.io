@@ -321,3 +321,6 @@ h3{font-size:1.12rem}
   .split .cover-wrap{width:min(280px,80%)}
 }
 .split:has(> .prose:only-child){grid-template-columns:1fr}
+.portrait{aspect-ratio:4/5;padding:0;box-shadow:var(--shadow)}
+.portrait img{object-position:50% 30%}
+.split > .portrait{max-width:380px}
