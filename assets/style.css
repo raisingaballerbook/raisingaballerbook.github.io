@@ -320,3 +320,4 @@ h3{font-size:1.12rem}
   .hero .cover-wrap{width:min(300px,85%);max-width:none;margin:4px auto 0;justify-self:center}
   .split .cover-wrap{width:min(280px,80%)}
 }
+.split:has(> .prose:only-child){grid-template-columns:1fr}
